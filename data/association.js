@@ -3,13 +3,13 @@ import Post from "../model/Post.js";
 import Comment from "../model/Comment.js";
 import Subscription from "../model/Subscription.js";
 
-User.hasMany(Post, { foreignKey: "userId" });
+User.hasMany(Post, { foreignKey: "userId", onDelete: "CASCADE" });
 Post.belongsTo(User, { foreignKey: "userId" });
 
-User.hasMany(Comment, { foreignKey: "userId" });
+User.hasMany(Comment, { foreignKey: "userId", onDelete: "CASCADE" });
 Comment.belongsTo(User, { foreignKey: "userId" });
 
-Post.hasMany(Comment, { foreignKey: "postId" });
+Post.hasMany(Comment, { foreignKey: "postId", onDelete: "CASCADE" });
 Comment.belongsTo(Post, { foreignKey: "postId" });
 
 User.belongsToMany(User, {
