@@ -9,6 +9,7 @@ import dotenv from "dotenv";
 import swaggerui from "swagger-ui-express";
 import swaggerDoc from "./docs/openapi.json" assert { type: "json" };
 import { Socket } from "./wss/socket.js";
+import { graphqlMiddleware } from "./graphql/index.js";
 // import { sequelize } from "./data/index.js";
 
 dotenv.config();
@@ -25,6 +26,8 @@ app.use("/api", userRoutes);
 app.use("/api", postRoutes);
 app.use("/api", commentRoutes);
 app.use("/api", messageRoutes);
+
+app.use("/graphql", graphqlMiddleware);
 
 new Socket(2999);
 

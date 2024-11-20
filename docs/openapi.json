@@ -16,14 +16,16 @@
     {
       "name": "Comments",
       "description": "Operations related to comments"
+    },
+    {
+      "name": "GraphQL",
+      "description": "Operations related to GraphQL"
     }
   ],
   "paths": {
     "/api/users/{userId}/posts": {
       "get": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Get posts by user",
         "parameters": [
           {
@@ -55,9 +57,7 @@
     },
     "/api/users/signup": {
       "post": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "User signup",
         "requestBody": {
           "required": true,
@@ -84,9 +84,7 @@
     },
     "/api/users/login": {
       "post": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "User login",
         "requestBody": {
           "required": true,
@@ -116,9 +114,7 @@
     },
     "/api/users": {
       "delete": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Delete user",
         "responses": {
           "200": {
@@ -138,9 +134,7 @@
         ]
       },
       "put": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Update user",
         "requestBody": {
           "required": true,
@@ -175,9 +169,7 @@
     },
     "/api/users/{userId}/subscribe": {
       "post": {
-        "tags": [
-          "Users"
-        ],
+        "tags": ["Users"],
         "summary": "Subscribe to user",
         "parameters": [
           {
@@ -222,9 +214,7 @@
     },
     "/api/posts": {
       "get": {
-        "tags": [
-          "Posts"
-        ],
+        "tags": ["Posts"],
         "summary": "Get all posts",
         "responses": {
           "200": {
@@ -241,9 +231,7 @@
         ]
       },
       "post": {
-        "tags": [
-          "Posts"
-        ],
+        "tags": ["Posts"],
         "summary": "Create post",
         "requestBody": {
           "required": true,
@@ -275,9 +263,7 @@
     },
     "/api/posts/subscribed": {
       "get": {
-        "tags": [
-          "Posts"
-        ],
+        "tags": ["Posts"],
         "summary": "Get subscribed posts",
         "responses": {
           "200": {
@@ -296,9 +282,7 @@
     },
     "/api/posts/{postId}/comments": {
       "get": {
-        "tags": [
-          "Posts"
-        ],
+        "tags": ["Posts"],
         "summary": "Get comments by post",
         "parameters": [
           {
@@ -330,9 +314,7 @@
     },
     "/api/my-posts": {
       "get": {
-        "tags": [
-          "Posts"
-        ],
+        "tags": ["Posts"],
         "summary": "Get my posts",
         "responses": {
           "200": {
@@ -354,9 +336,7 @@
     },
     "/api/posts/{postId}": {
       "put": {
-        "tags": [
-          "Posts"
-        ],
+        "tags": ["Posts"],
         "summary": "Update post",
         "parameters": [
           {
@@ -399,9 +379,7 @@
         ]
       },
       "delete": {
-        "tags": [
-          "Posts"
-        ],
+        "tags": ["Posts"],
         "summary": "Delete post",
         "parameters": [
           {
@@ -436,9 +414,7 @@
     },
     "/api/comments/{postId}": {
       "post": {
-        "tags": [
-          "Comments"
-        ],
+        "tags": ["Comments"],
         "summary": "Create comment",
         "parameters": [
           {
@@ -483,9 +459,7 @@
     },
     "/api/comments/{commentId}": {
       "put": {
-        "tags": [
-          "Comments"
-        ],
+        "tags": ["Comments"],
         "summary": "Update comment",
         "parameters": [
           {
@@ -531,9 +505,7 @@
         ]
       },
       "delete": {
-        "tags": [
-          "Comments"
-        ],
+        "tags": ["Comments"],
         "summary": "Delete comment",
         "parameters": [
           {
@@ -565,6 +537,65 @@
           }
         ]
       }
+    },
+
+    "/graphql": {
+      "post": {
+        "tags": ["GraphQL"],
+        "summary": "Execute GraphQL query",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GraphQLQuery"
+              },
+              "examples": {
+                "myPosts": {
+                  "summary": "Get my posts",
+                  "value": {
+                    "query": "query { myPosts { id title content user { id firstname lastname email photo } } }"
+                  }
+                },
+                "myComments": {
+                  "summary": "Get my comments",
+                  "value": {
+                    "query": "query { myComments { id content user { id firstname lastname email photo } post { id title content } } }"
+                  }
+                },
+                "friendsPosts": {
+                  "summary": "Get friends' posts",
+                  "value": {
+                    "query": "query { friendsPosts { id title content user { id firstname lastname email photo } } }"
+                  }
+                },
+                "friendsComments": {
+                  "summary": "Get friends' comments",
+                  "value": {
+                    "query": "query { friendsComments { id content user { id firstname lastname email photo } post { id title content } } }"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
     }
   },
   "components": {
@@ -578,12 +609,7 @@
     "schemas": {
       "UserSignup": {
         "type": "object",
-        "required": [
-          "firstname",
-          "lastname",
-          "email",
-          "password"
-        ],
+        "required": ["firstname", "lastname", "email", "password"],
         "properties": {
           "firstname": {
             "type": "string"
@@ -601,10 +627,7 @@
       },
       "UserLogin": {
         "type": "object",
-        "required": [
-          "email",
-          "password"
-        ],
+        "required": ["email", "password"],
         "properties": {
           "email": {
             "type": "string"
@@ -633,9 +656,7 @@
       },
       "SubscribeUser": {
         "type": "object",
-        "required": [
-          "id"
-        ],
+        "required": ["id"],
         "properties": {
           "id": {
             "type": "string"
@@ -644,10 +665,7 @@
       },
       "CreatePost": {
         "type": "object",
-        "required": [
-          "title",
-          "content"
-        ],
+        "required": ["title", "content"],
         "properties": {
           "title": {
             "type": "string"
@@ -659,10 +677,7 @@
       },
       "UpdatePost": {
         "type": "object",
-        "required": [
-          "title",
-          "content"
-        ],
+        "required": ["title", "content"],
         "properties": {
           "title": {
             "type": "string"
@@ -674,9 +689,7 @@
       },
       "CreateComment": {
         "type": "object",
-        "required": [
-          "content"
-        ],
+        "required": ["content"],
         "properties": {
           "content": {
             "type": "string"
@@ -685,12 +698,22 @@
       },
       "UpdateComment": {
         "type": "object",
-        "required": [
-          "content"
-        ],
+        "required": ["content"],
         "properties": {
           "content": {
             "type": "string"
+          }
+        }
+      },
+      "GraphQLQuery": {
+        "type": "object",
+        "required": ["query"],
+        "properties": {
+          "query": {
+            "type": "string"
+          },
+          "variables": {
+            "type": "object"
           }
         }
       }
