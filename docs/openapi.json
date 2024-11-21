@@ -18,6 +18,10 @@
       "description": "Operations related to comments"
     },
     {
+      "name": "Messages",
+      "description": "Operations related to messages"
+    },
+    {
       "name": "GraphQL",
       "description": "Operations related to GraphQL"
     }
@@ -538,7 +542,38 @@
         ]
       }
     },
-
+    "/api/messages": {
+      "post": {
+        "tags": ["Messages"],
+        "summary": "Create a new message",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMessage"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Message created successfully"
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
     "/graphql": {
       "post": {
         "tags": ["GraphQL"],
@@ -700,6 +735,18 @@
         "type": "object",
         "required": ["content"],
         "properties": {
+          "content": {
+            "type": "string"
+          }
+        }
+      },
+      "CreateMessage": {
+        "type": "object",
+        "required": ["receiverId", "content"],
+        "properties": {
+          "receiverId": {
+            "type": "integer"
+          },
           "content": {
             "type": "string"
           }

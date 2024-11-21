@@ -32,11 +32,15 @@ npm install
 JWT_SECRET=your_jwt_secret
 ```
 
-## Installation
+## Démarrage du serveur
 
-1. Démarrage du serveur
+1. Démarrez le serveur :
 
 ```sh
 pnpm run start
 npm run start
 ```
+
+## Message webswocket
+
+Pour envoyer un message à un utilisateur, il faut d'abord que vous vous suiviez puis avec swagger aller au niveau du create pour lancer la discussion puis aller sur le front et vous retrouverez les discussions. À ce moment la vous pourrez discuter avec lui.
