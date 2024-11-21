@@ -14,8 +14,8 @@ Ce projet est une application de réseau social construite avec Node.js, Express
 1. Clonez le dépôt :
 
 ```sh
-git clone https://github.com/votre-utilisateur/reseau-social.git
-cd reseau-social
+git clone https://github.com/Theo-mrhd/instantagram.git
+cd instantagram
 ```
 
 2. Installez les dépendances :
